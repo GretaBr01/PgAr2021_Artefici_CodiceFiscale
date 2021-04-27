@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		// prelievoDatiPersone(inputPersone.xml);			// --> classe Manager --> classe InputXML
+		//prelievoDatiPersone(inputPersone.xml);			// --> classe Manager --> classe InputXML
 		// prelievoDatiComuni(comuni.xml);					// --> classe Manager --> classe InputXML
 		// prelievoDatiCodiciFiscali(codiciFiscali.xml);	// --> classe Manager --> classe InputXML
 		
@@ -13,6 +13,13 @@ public class Main {
 		// verificaPresenzaCodiceFiscaleInFile();							// --> classe Manager
 		
 		// scritturaFileXML();						// --> classe Manager  --> classe OutputXML
+		
+		
+		
+		InputXML file = new InputXML();
+		file.leggiXMLPersone("inputPersone.xml");
+		file.leggiXMLComune("comuni.xml");
+		file.leggiXMLCodiceFiscale("codiciFiscali.xml");
 		
 
 	}
