@@ -3,7 +3,17 @@ package cdf;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		// prelievoDatiPersone(inputPersone.xml);			// --> classe Manager --> classe InputXML
+		// prelievoDatiComuni(comuni.xml);					// --> classe Manager --> classe InputXML
+		// prelievoDatiCodiciFiscali(codiciFiscali.xml);	// --> classe Manager --> classe InputXML
+		
+		// generaCodiciFiscaliPersone();									// --> classe Manager --> CodiceFiscale
+		// verificaValiditaCodiciFiscali();  //del file codiciFiscali.xml	// --> classe Manager --> CodiceFiscale
+		// verificaPresenzaCodiceFiscaleInFile();							// --> classe Manager
+		
+		// scritturaFileXML();						// --> classe Manager  --> classe OutputXML
+		
 
 	}
 
