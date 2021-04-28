@@ -15,6 +15,7 @@
 			ArrayList<Persona> persone= new ArrayList<Persona>();
 			Persona persona = null;
 			String filename= nome_file;
+			String comune;
 			
 			XMLInputFactory xmlif = null;
 			XMLStreamReader xmlr = null;
@@ -54,7 +55,9 @@
 							 		persona.setSesso(xmlr.getElementText());
 							 		break;
 							 	case "comune_nascita":
-							 		persona.setComune_nascita(xmlr.getElementText());
+							 		comune=xmlr.getElementText();
+							 		persona.setComune_nascita(Manager.getComune(comune));
+							 		
 							 		break;
 							 	case "data_nascita":
 							 		persona.setData_nascita(xmlr.getElementText());		
@@ -68,17 +71,15 @@
 							 }
 							 break;
 					 }
-					 try {
-						 xmlr.next();
-					 }catch (XMLStreamException e) {
-						e.printStackTrace();
-					 }
+					xmlr.next();
 				}
 			} catch (XMLStreamException e) {
 				e.printStackTrace();
 			}			
 			return persone;
 		}
+		
+		
 		public static ArrayList<Comune> leggiXMLComune(String nome_file) {
 			ArrayList<Comune> comuni= new ArrayList<Comune>();
 			Comune comune = null;
@@ -127,11 +128,7 @@
 							 }
 							 break;
 					 }
-					 try {
-						 xmlr.next();
-					 }catch (XMLStreamException e) {
-						e.printStackTrace();
-					 }
+					xmlr.next();
 				}
 			} catch (XMLStreamException e) {
 				e.printStackTrace();
@@ -140,6 +137,8 @@
 			
 				
 		}
+		
+		
 		public static ArrayList<CodiceFiscale> leggiXMLCodiceFiscale(String nome_file) {
 			ArrayList<CodiceFiscale> codiciFiscaliInput= new ArrayList<CodiceFiscale>();
 			CodiceFiscale codiceFiscale = null;
@@ -166,24 +165,16 @@
 							 if(xmlr.getLocalName().equalsIgnoreCase("codice")){
 							 						 		
 							 		codiceFiscale= new CodiceFiscale();
-							 		codiceFiscale.setCodice(xmlr.getElementText());						 								 								 	
+							 		codiceFiscale.setCodice(xmlr.getElementText());	
+							 		codiciFiscaliInput.add(codiceFiscale);
+							 		
 							 }						 	
 							 break;
 						 case XMLStreamConstants.END_ELEMENT: // fine di un elemento: stampa il nome del tag chiuso
 							 System.out.println("END-Tag " + xmlr.getLocalName()); 
-							 if(xmlr.getLocalName().equalsIgnoreCase("codice")) {
-							 		codiciFiscaliInput.add(codiceFiscale);
-							 }
-							 break;
-						 case XMLStreamConstants.CHARACTERS:
 							 break;
 					 }
 					 xmlr.next();
-					 /*try {
-						
-					 }catch (XMLStreamException e) {
-						e.printStackTrace();
-					 }*/
 				}
 			} catch (XMLStreamException e) {
 				e.printStackTrace();
