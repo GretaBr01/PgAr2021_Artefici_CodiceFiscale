@@ -12,6 +12,7 @@ public class Persona {
 	private String sesso;
 	private Comune comune_nascita;
 	private Date data_nascita;
+	private String codice_fiscale;
 
 	public Persona() {
 		// TODO Auto-generated constructor stub
@@ -66,8 +67,19 @@ public class Persona {
 			this.data_nascita = new SimpleDateFormat("yyyy-MM-dd").parse(stringa_data);
 		} catch (ParseException e) {
 			e.printStackTrace();
-		} 
-		
-	}	
+		} 		
+	}
+	
+	public String getCodice_fiscale() {
+		return codice_fiscale;
+	}
+
+	public void setCodice_fiscale(String codice_fiscale) {
+		this.codice_fiscale = codice_fiscale;
+	}
+
+	public String getId() {
+		return id;
+	}
 
 }
