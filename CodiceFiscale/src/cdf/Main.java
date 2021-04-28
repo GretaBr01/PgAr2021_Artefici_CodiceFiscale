@@ -2,26 +2,22 @@ package cdf;
 
 public class Main {
 
+	private static final String CODICI_FISCALI_XML = "codiciFiscali.xml";
+	private static final String INPUTPERSONE_XML = "inputPersone.xml";
+	private static final String COMUNI_XML = "comuni.xml";
+
 	public static void main(String[] args) {
 		
-		//prelievoDatiPersone(inputPersone.xml);			// --> classe Manager --> classe InputXML
-		// prelievoDatiComuni(comuni.xml);					// --> classe Manager --> classe InputXML
-		// prelievoDatiCodiciFiscali(codiciFiscali.xml);	// --> classe Manager --> classe InputXML
+		Manager.prelievoDatiComuni(COMUNI_XML);					// --> classe Manager --> classe InputXML
+		Manager.prelievoDatiPersone(INPUTPERSONE_XML);			// --> classe Manager --> classe InputXML
+		Manager.prelievoDatiCodiciFiscali(CODICI_FISCALI_XML);	// --> classe Manager --> classe InputXML
 		
-		// generaCodiciFiscaliPersone();									// --> classe Manager --> CodiceFiscale
+		Manager.generaCodiciFiscaliPersone();								// --> classe Manager --> CodiceFiscale
 		// verificaValiditaCodiciFiscali();  //del file codiciFiscali.xml	// --> classe Manager --> CodiceFiscale
 		// verificaPresenzaCodiceFiscaleInFile();							// --> classe Manager
 		
-		// scritturaFileXML();						// --> classe Manager  --> classe OutputXML
+		// scritturaFileXML();						// --> classe Manager  --> classe OutputXML	
 		
-		
-		
-		InputXML file = new InputXML();
-		file.leggiXMLPersone("inputPersone.xml");
-		file.leggiXMLComune("comuni.xml");
-		file.leggiXMLCodiceFiscale("codiciFiscali.xml");
-		
-
 	}
 
 }
