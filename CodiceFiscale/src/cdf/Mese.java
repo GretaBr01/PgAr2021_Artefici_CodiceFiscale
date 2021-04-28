@@ -1,23 +1,25 @@
 package cdf;
 
 public enum Mese {
-	GENNAIO ("A"), 
-	FEBBRAIO ("B"),
-	MARZO ("C"),
-	APRILE ("D"),
-	MAGGIO ("E"),
-	GIUGNO ("H"),
-	LUGLIO ("L"),
-	AGOSTO ("M"),
-	SETTEMBRE ("P"),
-	OTTOBRE ("R"),
-	NOVEMBRE ("S"),
-	DICEMBRE ("T");
+	GENNAIO ("A", 31), 
+	FEBBRAIO ("B", 28),
+	MARZO ("C", 31),
+	APRILE ("D", 30),
+	MAGGIO ("E", 31),
+	GIUGNO ("H", 30),
+	LUGLIO ("L", 31),
+	AGOSTO ("M", 31),
+	SETTEMBRE ("P", 30),
+	OTTOBRE ("R", 31),
+	NOVEMBRE ("S", 30),
+	DICEMBRE ("T", 31);
 	
 	String valore;
+	int giorni;
 	
-	Mese(String string) {
+	Mese(String string, int i) {
 		this.valore=string;
+		this.giorni=i;
 	}
 	
 	/**
@@ -35,6 +37,33 @@ public enum Mese {
 	 */
 	public String getValore() {
 		return valore;
+	}
+	
+	public int getGiorni() {
+		return giorni;
+	}
+	
+	public static boolean isPresente(String carattere) {
+		Mese nodes[] = values();
+		
+		for(int i=0; i<nodes.length; i++) {
+			if(nodes[i].getValore().equalsIgnoreCase(carattere)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static Mese getNomeDaValore(String valore) {
+		Mese var = null;
+		Mese nodes[] = values();
+	
+		for(int i=0; i<nodes.length; i++) {
+			if (nodes[i].getValore().equalsIgnoreCase(valore)) {
+				return getById(i);
+			}
+		}
+		return var;
 	}
 	
 	
