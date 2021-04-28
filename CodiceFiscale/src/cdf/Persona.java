@@ -10,7 +10,7 @@ public class Persona {
 	private String nome;
 	private String cognome;
 	private String sesso;
-	private String comune_nascita;
+	private Comune comune_nascita;
 	private Date data_nascita;
 
 	public Persona() {
@@ -49,11 +49,11 @@ public class Persona {
 		this.sesso = sesso;
 	}
 
-	public String getComune_nascita() {
+	public Comune getComune_nascita() {
 		return comune_nascita;
 	}
 
-	public void setComune_nascita(String comune_nascita) {
+	public void setComune_nascita(Comune comune_nascita) {
 		this.comune_nascita = comune_nascita;
 	}
 
@@ -64,9 +64,7 @@ public class Persona {
 	public void setData_nascita(String stringa_data) {
 		try {
 			this.data_nascita = new SimpleDateFormat("yyyy-MM-dd").parse(stringa_data);
-			System.out.println(data_nascita);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
