@@ -30,16 +30,11 @@
 			try {
 				while (xmlr.hasNext()){ 
 					 switch (xmlr.getEventType()) { 
-						 case XMLStreamConstants.START_DOCUMENT: 
-							 System.out.println("Start Read Doc " + filename); 
-							 break;
 						 case XMLStreamConstants.START_ELEMENT:
-							 System.out.println("Tag " + xmlr.getLocalName());
 							 switch (xmlr.getLocalName()){
 							 	case "persona":						 		
 							 		persona= new Persona();
 							 		for (int i = 0; i < xmlr.getAttributeCount(); i++) {
-							 			System.out.printf(" => attributo %s->%s%n", xmlr.getAttributeLocalName(i), xmlr.getAttributeValue(i));
 							 			if(xmlr.getAttributeLocalName(i)=="id") {
 							 				persona.setId(xmlr.getAttributeValue(i));
 							 			}
@@ -65,7 +60,6 @@
 							 }						 	
 							 break;
 						 case XMLStreamConstants.END_ELEMENT: // fine di un elemento: stampa il nome del tag chiuso
-							 System.out.println("END-Tag " + xmlr.getLocalName()); 
 							 if(xmlr.getLocalName().equalsIgnoreCase("persona")) {
 							 		persone.add(persona);
 							 }
@@ -98,19 +92,11 @@
 			try {
 				while (xmlr.hasNext()){ 
 					 switch (xmlr.getEventType()) { 
-						 case XMLStreamConstants.START_DOCUMENT: 
-							 System.out.println("Start Read Doc " + filename); 
-							 break;
 						 case XMLStreamConstants.START_ELEMENT:
-							 System.out.println("Tag " + xmlr.getLocalName());
 							 switch (xmlr.getLocalName()){
 							 	
 							   case "comune":						 		
-							 		comune= new Comune();
-							 		for (int i = 0; i < xmlr.getAttributeCount(); i++) {
-							 			System.out.printf(" => attributo %s->%s%n", xmlr.getAttributeLocalName(i), xmlr.getAttributeValue(i));
-							 			
-							 		}									 
+							 		comune= new Comune();									 
 							 		break;
 							   case "nome":
 								   comune.setNome(xmlr.getElementText());
@@ -122,7 +108,6 @@
 							 }						 	
 							 break;
 						 case XMLStreamConstants.END_ELEMENT: // fine di un elemento: stampa il nome del tag chiuso
-							 System.out.println("END-Tag " + xmlr.getLocalName()); 
 							 if(xmlr.getLocalName().equalsIgnoreCase("comune")) {
 							 		comuni.add(comune);
 							 }
@@ -156,23 +141,12 @@
 			
 			try {
 				while (xmlr.hasNext()){ 
-					 switch (xmlr.getEventType()) { 
-						 case XMLStreamConstants.START_DOCUMENT: 
-							 System.out.println("Start Read Doc " + filename); 
-							 break;
-						 case XMLStreamConstants.START_ELEMENT:
-							 System.out.println("Tag " + xmlr.getLocalName());
-							 if(xmlr.getLocalName().equalsIgnoreCase("codice")){
-							 						 		
-							 		codiceFiscale= new CodiceFiscale();
-							 		codiceFiscale.setCodice(xmlr.getElementText());	
-							 		codiciFiscaliInput.add(codiceFiscale);
-							 		
-							 }						 	
-							 break;
-						 case XMLStreamConstants.END_ELEMENT: // fine di un elemento: stampa il nome del tag chiuso
-							 System.out.println("END-Tag " + xmlr.getLocalName()); 
-							 break;
+					 if(xmlr.getEventType() == XMLStreamConstants.START_ELEMENT) {
+						 if(xmlr.getLocalName().equalsIgnoreCase("codice")){							 						 		
+						 		codiceFiscale= new CodiceFiscale();
+						 		codiceFiscale.setCodice(xmlr.getElementText());	
+						 		codiciFiscaliInput.add(codiceFiscale);							 		
+						 }
 					 }
 					 xmlr.next();
 				}

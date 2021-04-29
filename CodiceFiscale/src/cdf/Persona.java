@@ -13,13 +13,10 @@ public class Persona {
 	private Comune comune_nascita;
 	private Date data_nascita;
 	private String codice_fiscale;
+	private boolean is_presente=false;
 
 	public Persona() {
 		// TODO Auto-generated constructor stub
-	}
-	
-	public String getID() {
-		return id;
 	}
 
 	public String getNome() {
@@ -28,6 +25,10 @@ public class Persona {
 	
 	public void setId(String string) {
 		this.id = string;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public void setNome(String nome) {
@@ -78,8 +79,13 @@ public class Persona {
 		this.codice_fiscale = codice_fiscale;
 	}
 
-	public String getId() {
-		return id;
+	public boolean getIs_presente() {
+		return is_presente;
 	}
+
+	public void setIs_presente(boolean is_presente) {
+		this.is_presente = is_presente;
+	}
+
 
 }

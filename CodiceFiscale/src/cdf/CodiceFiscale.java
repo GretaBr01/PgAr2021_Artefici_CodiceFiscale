@@ -17,6 +17,8 @@ public class CodiceFiscale {
 		
 		
 	private String codice;
+	private boolean is_corretto;
+	private boolean is_appaiato=false;
 	
 	public CodiceFiscale() {
 		// TODO Auto-generated constructor stub
@@ -31,6 +33,22 @@ public class CodiceFiscale {
 	}
 	
 	
+	public boolean getIs_corretto() {
+		return is_corretto;
+	}
+
+	public void setIs_corretto(boolean is_corretto) {
+		this.is_corretto = is_corretto;
+	}
+
+	public boolean getIs_appaiato() {
+		return is_appaiato;
+	}
+
+	public void setIs_appaiato(boolean is_appaiato) {
+		this.is_appaiato = is_appaiato;
+	}
+
 	public static String generazioneCodiceFiscale(Persona persona) {
 		String codice_fiscale = "";
 		Boolean is_nome;
@@ -126,7 +144,7 @@ public class CodiceFiscale {
 		if(sesso.substring(0, 1).equals(FEMMINA)) {
 			giorno=giorno+ADD_GIORNO_NASCITA;
 		}
-		caratteri=String.valueOf(giorno);
+		caratteri=String.format("%02d",giorno);
 		return caratteri;
 	}
 	

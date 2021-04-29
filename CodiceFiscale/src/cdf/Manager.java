@@ -41,4 +41,31 @@ public class Manager {
 		}
 		return null;
 	}
+	
+	public static void verificaValiditaCodiciFiscali() {
+		boolean corretto;
+		for(CodiceFiscale cod_fisc: codici_fiscali) {
+			corretto = cod_fisc.verificaCodiceFiscale(cod_fisc.getCodice());
+			cod_fisc.setIs_corretto(corretto);
+		}
+	}
+	
+	public static void verificaPresenzaCodiceFiscaleInFile() {
+		boolean presente;
+		for(CodiceFiscale cod_fisc: codici_fiscali) {
+			if(cod_fisc.getIs_corretto()) {
+				for(Persona pers: persone) {
+					if(cod_fisc.getCodice().equals(pers.getCodice_fiscale())) {
+							presente=true;
+							cod_fisc.setIs_appaiato(presente);
+							pers.setIs_presente(presente);
+					}
+				}
+			}
+		}
+	}
+	
+	public static void scritturaFileXML() {
+		OutputXML.scriviXML(persone, codici_fiscali);
+	}
 }

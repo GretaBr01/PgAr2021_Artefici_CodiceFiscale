@@ -13,10 +13,10 @@ public class Main {
 		Manager.prelievoDatiCodiciFiscali(CODICI_FISCALI_XML);	// --> classe Manager --> classe InputXML
 		
 		Manager.generaCodiciFiscaliPersone();								// --> classe Manager --> CodiceFiscale
-		// verificaValiditaCodiciFiscali();  //del file codiciFiscali.xml	// --> classe Manager --> CodiceFiscale
-		// verificaPresenzaCodiceFiscaleInFile();							// --> classe Manager
+		Manager.verificaValiditaCodiciFiscali();  //del file codiciFiscali.xml	// --> classe Manager --> CodiceFiscale
+		Manager.verificaPresenzaCodiceFiscaleInFile();							// --> classe Manager
 		
-		// scritturaFileXML();						// --> classe Manager  --> classe OutputXML	
+		Manager.scritturaFileXML();						// --> classe Manager  --> classe OutputXML	
 		
 	}
 
