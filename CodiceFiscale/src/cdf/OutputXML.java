@@ -15,7 +15,7 @@ public class OutputXML {
 	
 	private static final String NOME_FILE_OUTPUT = "codiciPersone.xml";
 
-	public static void scriviXML(ArrayList<Persona> persone, ArrayList<CodiceFiscale> codice_fiscali) {
+	public static void scriviXML(ArrayList<Persona> persone, ArrayList<CodiceFiscale> codice_fiscali, int num_spaiati, int num_non_corretti) {
 		SimpleDateFormat stf=new SimpleDateFormat("yyyy-MM-dd");
 		
 		XMLOutputFactory xmlof = null;
@@ -62,13 +62,45 @@ public class OutputXML {
 				xmlw.writeEndElement(); 
 				
 				xmlw.writeStartElement("codice_fiscale");
-				xmlw.writeCharacters(persona.getCodice_fiscale());
+				if(persona.getIs_presente())
+					xmlw.writeCharacters(persona.getCodice_fiscale());
+				else
+					xmlw.writeCharacters("ASSENTE");				
 				xmlw.writeEndElement(); 
 				
 				xmlw.writeEndElement();
 				
 			}
-			xmlw.writeEndElement(); // chiusura di </programmaArnaldo>			
+			xmlw.writeEndElement(); // chiusura di </persone>
+			
+			xmlw.writeStartElement("codici");
+			
+			xmlw.writeStartElement("invalidi");
+			xmlw.writeAttribute("numero", String.valueOf(num_non_corretti));
+			for(int i=0; i<codice_fiscali.size(); i++) {
+				CodiceFiscale cod=codice_fiscali.get(i);
+				if(!cod.getIs_corretto()) {
+					xmlw.writeStartElement("codice");
+					xmlw.writeCharacters(cod.getCodice());
+					xmlw.writeEndElement(); 
+				}
+			}
+			xmlw.writeEndElement(); // chiusura di </invalidi>
+			
+			xmlw.writeStartElement("spaiati");
+			xmlw.writeAttribute("numero", String.valueOf(num_spaiati));
+			for(int i=0; i<codice_fiscali.size(); i++) {
+				CodiceFiscale cod=codice_fiscali.get(i);
+				if(cod.getIs_corretto() && !cod.getIs_appaiato()) {
+					xmlw.writeStartElement("codice");
+					xmlw.writeCharacters(cod.getCodice());
+					xmlw.writeEndElement(); 
+				}
+			}
+			xmlw.writeEndElement(); // chiusura di </spaiati>
+			
+			xmlw.writeEndElement(); // chiusura di </codici>
+			
 			xmlw.writeEndDocument(); // scrittura della fine del documento
 			xmlw.flush(); // svuota il buffer e procede alla scrittura
 			xmlw.close(); // chiusura del documento e delle risorse impiegate

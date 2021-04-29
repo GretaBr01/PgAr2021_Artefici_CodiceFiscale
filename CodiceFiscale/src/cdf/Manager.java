@@ -6,6 +6,8 @@ public class Manager {
 	private static ArrayList<Persona> persone;
 	private static ArrayList<Comune> comuni;
 	private static ArrayList<CodiceFiscale> codici_fiscali;
+	private static int numer_codici_non_corretti=0;
+	private static int numero_codici_appaiati=0;
 	
 	
 	public static void prelievoDatiComuni(String nome_file) {
@@ -59,13 +61,17 @@ public class Manager {
 							presente=true;
 							cod_fisc.setIs_appaiato(presente);
 							pers.setIs_presente(presente);
+							numero_codici_appaiati++;
 					}
 				}
+			}else {
+				numer_codici_non_corretti++;
 			}
 		}
 	}
 	
 	public static void scritturaFileXML() {
-		OutputXML.scriviXML(persone, codici_fiscali);
+		int num_spaiati=codici_fiscali.size()-numero_codici_appaiati-numer_codici_non_corretti;
+		OutputXML.scriviXML(persone, codici_fiscali, num_spaiati, numer_codici_non_corretti);
 	}
 }
