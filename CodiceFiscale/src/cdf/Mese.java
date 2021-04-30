@@ -14,17 +14,17 @@ public enum Mese {
 	NOVEMBRE ("S", 30),
 	DICEMBRE ("T", 31);
 	
-	String valore;
+	String carattere_mese;//lettera del mese per generazione del codice fiscale
 	int giorni;
 	
 	Mese(String string, int i) {
-		this.valore=string;
+		this.carattere_mese=string;
 		this.giorni=i;
 	}
 	
 	/**
-	 * serve per trovare il nome dell'elemento Enum che occupa l'indice dato come parametro
-	 * @param id	indice dell'elemento Enum
+	 * serve per trovare il nome dell'elemento Enum Mese che occupa l'indice dato come parametro
+	 * @param id	indice dell'elemento Enum Mese
 	 * @return	 elemento Enum presente all'indice dato
 	 */
 	public static Mese getById(int id) {
@@ -32,17 +32,24 @@ public enum Mese {
 	}
 	
 	/**
-	 * richiamando questo metodo si ottiene il valore della costante Enum
-	 * @return	valore
+	 * @return	carattere corrispondente all' elemento Enum Mese
 	 */
 	public String getValore() {
-		return valore;
+		return carattere_mese;
 	}
 	
+	/**
+	 * @return numero di giorni del mese
+	 */
 	public int getGiorni() {
 		return giorni;
 	}
 	
+	/**
+	 * verifica corrispondenza del carattere all'interno della classe Enum Mese
+	 * @param carattere
+	 * @return true se il carattere passato come argomento è stato trovato nella classe Enum Mese
+	 */
 	public static boolean isPresente(String carattere) {
 		Mese nodes[] = values();
 		
@@ -54,6 +61,11 @@ public enum Mese {
 		return false;
 	}
 	
+	/**
+	 * ricerca dell'elemento Enum Mese il cui valore corrisponde a quello passato come argomento
+	 * @param valore
+	 * @return oggetto Enum Mese
+	 */
 	public static Mese getNomeDaValore(String valore) {
 		Mese var = null;
 		Mese nodes[] = values();

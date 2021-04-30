@@ -39,34 +39,32 @@ public enum CaratteriPari {
 	_Z (25);
 
 	
-	private int valore;
+	private int valore; //valore necessario per generazione del carattere di controllo del codice fiscale
 	
 	CaratteriPari(int intVal) {
 		this.valore=intVal;
 	}
 
 	/**
-	 * serve per trovare il nome dell'elemento Enum che occupa l'indice dato come parametro
-	 * @param id	indice dell'elemento Enum
-	 * @return	 elemento Enum presente all'indice dato
+	 * serve per trovare il nome dell'elemento Enum CaratteriPari che occupa l'indice dato come argomento
+	 * @param id	indice dell'elemento Enum CaratteriPari
+	 * @return	 elemento Enum CaratteriPari presente all'indice dato
 	 */
 	public static CaratteriPari getById(int id) {
 		return CaratteriPari.values()[id];
 	}
 	
 	/**
-	 * richiamando questo metodo si ottiene il valore dell'elemento Enum
-	 * @return	valore
+	 * @return	valore dell'elemento Enum CaratteriPari
 	 */
 	public int getValore() {
 		return valore;
 	}
 	
 	/**
-	 * sapendo il carattere alfanumerico corrispondente ad un elemento Enum si ottiene il rispettivo valore
-	 * 
-	 * @param carattere		carattre alfanumerico
-	 * @return valore dell'elemento Enum corrispondente se trovato, altrimenti restituisce -1
+	 * sapendo il carattere alfanumerico corrispondente ad un elemento Enum CaratteriPari si ottiene il rispettivo valore
+	 * @param carattere		 
+	 * @return valore dell'elemento Enum CaratteriPari corrispondente se trovato, altrimenti restituisce -1
 	 */	
 	public static int getValoreDaNome(String carattere) {
 		int val = -1;

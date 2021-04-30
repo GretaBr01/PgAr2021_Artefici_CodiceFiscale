@@ -45,27 +45,25 @@ public enum CaratteriDispari {
 	}
 	
 	/**
-	 * serve per trovare il nome dell'elemento Enum che occupa l'indice dato come parametro
-	 * @param id	indice dell'elemento Enum
-	 * @return	 elemento Enum presente all'indice dato
+	 * serve per trovare il nome dell'elemento Enum CaratteriDispari che occupa l'indice dato come argomento
+	 * @param id	indice dell'elemento Enum CaratteriDispari
+	 * @return	 elemento Enum CaratteriDispari presente all'indice dato
 	 */
 	public CaratteriDispari getById(int id) {
 		return CaratteriDispari.values()[id];
 	}
 	
 	/**
-	 * richiamando questo metodo si ottiene il valore dell'elemento Enum
-	 * @return	valore
+	 * @return	valore corrispondente all' elemento Enum CaratteriDispari
 	 */
 	public int getValore() {
 		return valore;
 	}
 	
 	/**
-	 * sapendo il carattere alfanumerico corrispondente ad un elemento Enum si ottiene il rispettivo valore
-	 * 
-	 * @param carattere		carattre alfanumerico
-	 * @return valore dell'elemento Enum corrispondente se trovato, altrimenti restituisce -1
+	 * sapendo il carattere alfanumerico corrispondente ad un elemento Enum CaratteriDispari si ottiene il rispettivo valore
+	 * @param carattere		
+	 * @return valore dell'elemento Enum CaratteriDispari corrispondente se trovato, altrimenti restituisce -1
 	 */	
 	public static int getValoreDaNome(String carattere) {
 		int val = -1;

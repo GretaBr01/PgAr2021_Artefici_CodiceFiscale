@@ -28,34 +28,32 @@ public enum RestoCaratteri {
 	_Y (24),
 	_Z (25);
 
-	private int valore;
+	private int valore; //valore necessario per generazione del carattere di controllo del codice fiscale
 	
 	RestoCaratteri(int intVal) {
 		this.valore=intVal;
 	}
 	
 	/**
-	 * serve per trovare il nome dell'elemento Enum che occupa l'indice dato come parametro
-	 * @param id	indice dell'elemento Enum
-	 * @return	 elemento Enum presente all'indice dato
+	 * serve per trovare il nome dell'elemento Enum RestoCaratteri che occupa l'indice dato come parametro
+	 * @param id	indice dell'elemento Enum RestoCaratteri
+	 * @return	 elemento Enum RestoCaratteri presente all'indice dato
 	 */
 	public static RestoCaratteri getById(int id) {
 		return RestoCaratteri.values()[id];
 	}
 
 	/**
-	 * richiamando questo metodo si ottiene il valore dell'elemento Enum
-	 * @return	valore
+	 * @return	valore dell'elemento Enum RestoCaratteri
 	 */
 	public int getValore() {
 		return valore;
 	}
 	
 	/**
-	 * sapendo il carattere alfanumerico corrispondente ad un elemento Enum si ottiene il rispettivo valore
-	 * 
-	 * @param carattere		carattre alfanumerico
-	 * @return valore dell'elemento Enum corrispondente se trovato, altrimenti restituisce -1
+	 * sapendo il carattere alfanumerico corrispondente ad un elemento Enum RestoCaratteri si ottiene il rispettivo valore
+	 * @param carattere		
+	 * @return valore dell'elemento Enum RestoCaratteri corrispondente se trovato, altrimenti restituisce -1
 	 */	
 	public static int getValoreDaNome(String carattere) {
 		int val = -1;
@@ -75,9 +73,9 @@ public enum RestoCaratteri {
 	}
 	
 	/**
-	 * ricerca dell'elemento Enum avente un determinato valore
+	 * ricerca dell'elemento Enum RestoCaratteri avente come valore l'argomento fornito
 	 * @param valore
-	 * @return elemento Enum che ha come valore il parametro passato
+	 * @return elemento Enum RestoCaratteri che ha come valore il parametro passato
 	 */	
 	public static RestoCaratteri getNomeDaValore(int valore) {
 		RestoCaratteri var = null;

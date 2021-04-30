@@ -8,6 +8,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		
 		Manager.prelievoDatiComuni(COMUNI_XML);					// lettura e prelievo dati dal file comuni.xml
 		Manager.prelievoDatiPersone(INPUTPERSONE_XML);			// lettura e prelievo dati dal file inputPersone.xml
 		Manager.prelievoDatiCodiciFiscali(CODICI_FISCALI_XML);	// lettura e prelievo dati dal file codiciFiscali.xml
