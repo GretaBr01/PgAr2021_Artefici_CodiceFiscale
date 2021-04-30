@@ -3,20 +3,26 @@ package cdf;
 import java.text.SimpleDateFormat;
 
 public class CodiceFiscale {
+	//indici di suddivisione del codice fiscali in 7 macrogruppi, ciascuno rappresentante una specifica informazione della persona
 	private static final int INIZIO_BLOCCO7 = 15;
 	private static final int INIZIO_BLOCCO6 = 11;
 	private static final int INIZIO_BLOCCO5 = 9;
 	private static final int INIZIO_BLOCCO4 = 8;
 	private static final int INIZIO_BLOCCO3 = 6;
-	private static final int INIZIO_BLOCCO1_2 = 0;
-	private static final int DIVISORE = 26;
+	private static final int INIZIO_BLOCCO2 = 3;
+	private static final int INIZIO_BLOCCO1 = 0;
+	private static final int DIVISORE = 26; //divisore per il calcolo del carattere di controllo
 	private static final int ADD_GIORNO_NASCITA = 40;
 	private static final String FEMMINA = "F";
-	private static final String CARATTERE_AGGIUNTIVO = "X";
+	private static final String CARATTERE_AGGIUNTIVO = "X";//carattere aggiunto nel caso in cui le lettere del nome o cognome della 
+	                                                       //non siano sufficienti per la creazione del codice
 	private static final int NUM_CARATTERI=3;
-		
+	private static final char [] VOCALI = {'A', 'E', 'I', 'O', 'U'};
+	private static final char [] CONSONANTI = {'B', 'C', 'D', 'F', 'H', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'Z'};
 		
 	private String codice;
+	private boolean is_consonante = true;
+	private boolean is_vocale = false;
 	private boolean is_corretto;
 	private boolean is_appaiato=false;
 	
@@ -49,6 +55,12 @@ public class CodiceFiscale {
 		this.is_appaiato = is_appaiato;
 	}
 
+	/**
+	 * data una variabile di tipo Persona come argomento, vengono estrapolate le informazioni necessarie 
+	 * per la creazione del codice fiscale
+	 * @param cognom_nom
+	 * @return il codice fiscale della persona fornita come argomento
+	 */
 	public static String generazioneCodiceFiscale(Persona persona) {
 		String codice_fiscale = "";
 		Boolean is_nome;
@@ -86,23 +98,33 @@ public class CodiceFiscale {
 		return codice_fiscale;
 	}
 	
+	/**
+	 * data una stringa come argomento viene determinato la sezione di codice fiscale a seconda del fatto 
+	 * che sia un nome o cognome (is_nome)
+	 * @param stringa
+	 * @param is_nome
+	 * @return stringa_calcolata
+	 */
 	public static String calcolaStringa(String stringa, Boolean is_nome) {
 		String stringa_calcolata="";
 		stringa = stringa.replaceAll(" ", "");		// Rimuovo eventuali spazi
 	    stringa = stringa.toUpperCase();			// Rendo tutte le lettere maiuscole
 	    
-	    String consonanti_stringa = getConsonanti(stringa);
-	    String vocali_stringa = getVocali(stringa);
+	    String consonanti_stringa = getConsonanti(stringa); //salvo le consonanti contenute nella stringa che passo come argomento
+	    String vocali_stringa = getVocali(stringa); //salvo le vocali contenute nella stringa che passo come argomento
 		
 	    if(consonanti_stringa.length()==NUM_CARATTERI) {	    	
-	    	stringa_calcolata = consonanti_stringa;	    	
+	    	stringa_calcolata = consonanti_stringa;	  //se il numero delle consonanti coincide con 3, il codice del nome/cognome sarà dato da quelle consonanti  	
 	    }else if(consonanti_stringa.length()>NUM_CARATTERI){
-	    	if(is_nome) {
+	    	if(is_nome) {//se le consonanti sono maggiori di 3 e la stringa passata come argomento si riferisce ad un nome allora estraggo le consonanti in specifiche posizioni
 	    		stringa_calcolata = ""+consonanti_stringa.charAt(0)+consonanti_stringa.charAt(2)+consonanti_stringa.charAt(3);
-	    	}else {
+	    	}else {//se le consonanti sono maggiori di 3 e la stringa passata si riferisce ad un cognome allora considero le prime tre consonanti
 	    		stringa_calcolata = consonanti_stringa.substring(0,3);
 	    	}
 	    }else if(consonanti_stringa.length()<NUM_CARATTERI && stringa.length()<NUM_CARATTERI) {
+	    	/*se le consonanti non sono sufficienti per la creazione del codice ed la stringa considerata non possiede altri caratteri
+	    	 *allora inserisco le vocali della stessa ed infine tanti caratteri 'X' quanti ne servono per il completamento del codice (del nome/cognome) 
+	    	 */
 	    	
 	    	stringa_calcolata = consonanti_stringa;
 	    	stringa_calcolata = stringa_calcolata+vocali_stringa; 
@@ -110,6 +132,9 @@ public class CodiceFiscale {
 	    		stringa_calcolata=stringa_calcolata+CARATTERE_AGGIUNTIVO;
 	    	}
 	    }else if(consonanti_stringa.length()<NUM_CARATTERI && stringa.length()>NUM_CARATTERI){
+	    	/*se le consonanti non sono sufficienti per la creazione del codice ma la stringa considerata
+	    	 * possiede anche delle vocali, le prelevo fino al completamento del codice
+	    	 */
 	    	stringa_calcolata = consonanti_stringa;
 	    	for(int i=0; stringa_calcolata.length()<3; i++){
 	    		stringa_calcolata=stringa_calcolata+vocali_stringa.charAt(i);
@@ -119,18 +144,34 @@ public class CodiceFiscale {
 		return stringa_calcolata;
 	}
 	
+	/**
+	 * data la stringa passata come argomento, ritorna il contenuto della stessa privata delle sue vocali
+	 * @param stringa
+	 * @return stringa
+	 */
 	public static String getConsonanti(String stringa) {
 		stringa = stringa.toUpperCase();
 		stringa=stringa.replaceAll("[AEIOU]","");
 	    return stringa;
 	}
 	
+	/**
+	 * data la stringa passata come argomento, ritorna il contenuto della stessa privata delle sue consonanti
+	 * @param stringa
+	 * @return stringa
+	 */
 	public static String getVocali(String stringa) {
 		stringa = stringa.toUpperCase();
 		stringa=stringa.replaceAll("[^ AEIOU]","");
 	    return stringa;
 	}
 	
+	/**
+	 * dato un intero passato come argomento, rappresentante il mese, ritorna il carattere relativo ad esso,
+	 * rispettando le regole per la creazione del codice fiscale
+	 * @param mese
+	 * @return carattere del mese
+	 */
 	public static String calcolaCarattereMese(int mese) {
 		String carattere="";
 		mese=mese-1;	// l'idice del Enum parte da 0;
@@ -138,6 +179,13 @@ public class CodiceFiscale {
 		return carattere;
 	}
 	
+	/**
+	 * dato un intero e una stringa passato come argomento, rappresentanti rispettivamneto il giorno e il sesso,  ritorna una stringa
+	 * rappresentante il giorno di nascita, rispettando le regole per la creazione del codice fiscale in base ai due generi
+	 * @param giorno
+	 * @param sesso
+	 * @return caratteri
+	 */
 	public static String celcolaCaratteriGiorno(int giorno, String sesso) {
 		String caratteri="";
 		sesso=sesso.toUpperCase();
@@ -148,6 +196,12 @@ public class CodiceFiscale {
 		return caratteri;
 	}
 	
+	/**
+	 * data una stringa, rappresentante i primi 15 caratteri del codice fiscale, ritorna il carattere di controllo
+	 * rispettando le regole per la creazione del codice fiscale
+	 * @param codice_fisc
+	 * @return carattere
+	 */
 	public static String calcolaCarattereControllo(String codice_fisc) {
 		String carattere="";
 		
@@ -168,24 +222,49 @@ public class CodiceFiscale {
 		return carattere;
 	}
 	
-	
-	/*in un codice fiscale, per determinarme la validità bisogna
-	 * controllare che consonanti e numeri siano posizionati 
-	 * correttamente all'interno della stringa, e bisogna controllare
-	 * la correttezza del numero dei giorni rispetto al mese
+	/**
+	 * data una stringa passata come argomento, verifica se i caratteri rispettano le regole poste per
+	 * la creazione della sezione del codice fiscale del cognome e del nome 
+	 * @param cognom_nom
+	 * @return boolean
 	 */
-	
-	//verifica i pirimi 6 caratteri ==> i=[0,5]							NOME E COGNOME
 	public boolean verificaNomeCognome( String cognom_nom) {
+		Character carattere;
+		for(int i=0; i<cognom_nom.length(); i++) {
+			carattere = cognom_nom.charAt(i);
+	        for(int j = 0; j < CONSONANTI.length && is_consonante;j++) {
+	        	if(j==(CONSONANTI.length-1) && !carattere.equals(CONSONANTI[i])) {
+	        		is_consonante = false;
+	    	        is_vocale = true;
+	        		break;
+	        	}
+	        }
+	        for(int j = 0; j < VOCALI.length && !is_vocale; j++) {
+	        	if(j==(VOCALI.length-1) && !carattere.equals(VOCALI[j])) {
+	        		is_vocale = false;
+	        		break;
+	        	}
+	        }
+	        if(!is_consonante && !is_vocale && !carattere.equals(CARATTERE_AGGIUNTIVO)) return false;
+	    }
+	    
+		
+		return true;
+	}
+	
+	/*public boolean verificaNomeCognome( String cognom_nom) {
 		for(int i=0; i<cognom_nom.length(); i++) {
 			if(cognom_nom.charAt(i) < 'A' || cognom_nom.charAt(i) > 'Z') {
 				return false;
 			}
 		}
 		return true;
-	}
-	
-	//verifica i 2 caratteri successivi ==> i=[6,7]						ANNO
+	}*/
+	/**
+	 * data una stringa passata come argomento, verifica se contiene solo caratteri numerici
+	 * @param year
+	 * @return boolean
+	 */
 	public boolean verificaAnno(String year) {
 		for( int indice = 0; indice <year.length(); indice++) {
 			if(year.charAt(indice)< '0' || year.charAt(indice) > '9' ) {
@@ -195,18 +274,29 @@ public class CodiceFiscale {
 		return true;
 	}
 	
-	//													MESE-GIORNO
+	
+	/**
+	 * dati come argomenti le stringhe rappresentanti il numero del mese e il numero del giorno viene 
+	 * verificato che il giorno appartenga la mese
+	 * @param carattere_mese
+	 * @param giorno
+	 * @return boolean
+	 */
 	public boolean verificaMeseGiorno(String carattere_mese, String giorno) {
 		
 		if(Mese.isPresente(carattere_mese)){
-			if(Integer.parseInt(giorno)<= Mese.getNomeDaValore(carattere_mese).getGiorni() && Integer.parseInt(giorno)>0)return true;
-			if(Integer.parseInt(giorno)<= Mese.getNomeDaValore(carattere_mese).getGiorni()+ADD_GIORNO_NASCITA && Integer.parseInt(giorno)>ADD_GIORNO_NASCITA)return true;
+			if(Integer.parseInt(giorno)<= Mese.getNomeDaValore(carattere_mese).getGiorni() && Integer.parseInt(giorno)>0)return true; //verifica appartenenza del giorno nel caso in cui si tratta di un uomo
+			if(Integer.parseInt(giorno)<= Mese.getNomeDaValore(carattere_mese).getGiorni()+ADD_GIORNO_NASCITA && Integer.parseInt(giorno)>ADD_GIORNO_NASCITA)return true; //verifica appartenenza del giorno nel caso in cui si tratta di un donna
 		}
 		return false;
 	}
 		
-	
-	//verifico il codice del comune 
+	/**
+	 * data una stringa passata come argomento, viene verificato che il primo carattere sia una lettera 
+	 * e che i restanti siano dei caratteri numerici
+	 * @param code
+	 * @return boolean
+	 */
 	public boolean verificaCodiceComune(String code) {
 		int i;
 		if(code.charAt(0)<'A' || code.charAt(0)>'Z') {
@@ -222,6 +312,15 @@ public class CodiceFiscale {
 		return true;
 	}
 	
+	/**
+	 * date due stringhe passate come argomenti, che rappresentano rispettivamente i primi 15 caratteri di un codice fiscale ed 
+	 * un carattere di controllo, viene verificato che il carattere di controllo risultante dal codice fiscale 
+	 * fornito coincida con quello passato come argomento
+	 * viene verificato che 
+	 * @param codice_fisc
+	 * @param carattere
+	 * @return boolean
+	 */
 	public boolean verificaCarattereControllo(String codice_fisc, String carattere) {
 		String carattere_calcolato;
 		carattere_calcolato=calcolaCarattereControllo(codice_fisc);
@@ -231,22 +330,29 @@ public class CodiceFiscale {
 		}
 		return false;
 	}
-	
-	//verifico correttezza del codice fiscale
+
+
+	/**
+	 *data una stringa che rappresenta un codice fiscale, passata come argomento, viene verificata la sua validità
+	 * @param codice_fiscale
+	 * @return
+	 */
 	public boolean verificaCodiceFiscale(String codice_fiscale) {
-		String nome_cognome=codice_fiscale.substring(INIZIO_BLOCCO1_2, INIZIO_BLOCCO3);
-		String anno=codice_fiscale.substring(INIZIO_BLOCCO3, INIZIO_BLOCCO4);
-		String mese=codice_fiscale.substring(INIZIO_BLOCCO4, INIZIO_BLOCCO5);
-		String giorno=codice_fiscale.substring(INIZIO_BLOCCO5, INIZIO_BLOCCO6);
-		String comune=codice_fiscale.substring(INIZIO_BLOCCO6, INIZIO_BLOCCO7);
-		String cf_senza_carattere_controllo=codice_fiscale.substring(INIZIO_BLOCCO1_2, INIZIO_BLOCCO7);
-		String carattere_controllo=codice_fiscale.substring(INIZIO_BLOCCO7);
+		String cognome=codice_fiscale.substring(INIZIO_BLOCCO1, INIZIO_BLOCCO2);//blocco caratteri cognome
+		String nome=codice_fiscale.substring(INIZIO_BLOCCO2, INIZIO_BLOCCO3);// blocco caratteri nome
+		String anno=codice_fiscale.substring(INIZIO_BLOCCO3, INIZIO_BLOCCO4);// blocco caratteri anno di nascita
+		String mese=codice_fiscale.substring(INIZIO_BLOCCO4, INIZIO_BLOCCO5);//blocco caratteri mese di nascita
+		String giorno=codice_fiscale.substring(INIZIO_BLOCCO5, INIZIO_BLOCCO6);//blocco caratteri giorno di nascita
+		String comune=codice_fiscale.substring(INIZIO_BLOCCO6, INIZIO_BLOCCO7);//blocco caratteri luogo di nascita
+		String cf_senza_carattere_controllo=codice_fiscale.substring(INIZIO_BLOCCO1, INIZIO_BLOCCO7);//blocco comprendente tutti i primi 15 caratteri
+		String carattere_controllo=codice_fiscale.substring(INIZIO_BLOCCO7);// blocco carattere di controllo
 		
-		if(!verificaNomeCognome(nome_cognome)) return false;
-		if(!verificaAnno(anno)) return false;
-		if(!verificaMeseGiorno(mese, giorno)) return false;
-		if(!verificaCodiceComune(comune)) return false;
-		if(!verificaCarattereControllo(cf_senza_carattere_controllo,carattere_controllo))return false;
+		if(!verificaNomeCognome(cognome)) return false;//verifico validità blocco caratteri cognome
+		if(!verificaNomeCognome(nome)) return false;//verifico validità blocco caratteri nome
+		if(!verificaAnno(anno)) return false;//verifico validità blocco caratteri anno di nascita
+		if(!verificaMeseGiorno(mese, giorno)) return false;//verifico validità blocco caratteri mese di nascita
+		if(!verificaCodiceComune(comune)) return false;//verifico validità blocco caratteri giorno di nascita
+		if(!verificaCarattereControllo(cf_senza_carattere_controllo,carattere_controllo))return false;//verifico validità blocco carattere di controllo
 		return true;
 	}
 

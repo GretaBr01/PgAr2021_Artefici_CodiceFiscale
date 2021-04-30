@@ -9,19 +9,33 @@ public class Manager {
 	private static int numer_codici_non_corretti=0;
 	private static int numero_codici_appaiati=0;
 	
-	
+	/**
+	 * lettura del file passato come argomento e istaziamento di un'ArrayList contenente le informazioni ricavate 
+	 * @param nome_file
+	 */
 	public static void prelievoDatiComuni(String nome_file) {
 		comuni=InputXML.leggiXMLComune(nome_file);
 	}
 	
+	/**
+	 * lettura del file passato come argomento e istaziamento di un'ArrayList contenente le informazioni ricavate 
+	 * @param nome_file
+	 */
 	public static void prelievoDatiPersone(String nome_file) {
 		persone=InputXML.leggiXMLPersone(nome_file);
 	}
 	
+	/**
+	 * lettura del file passato come argomento e istaziamento di un'ArrayList contenente le informazioni ricavate 
+	 * @param nome_file
+	 */
 	public static void prelievoDatiCodiciFiscali(String nome_file) {
 		codici_fiscali=InputXML.leggiXMLCodiceFiscale(nome_file);
 	}
 	
+	/**
+	 * metodo che richiama il metodo di generazione dei codici fiscali
+	 */
 	public static void generaCodiciFiscaliPersone() {
 		String cod_fisc;
 		for(Persona pers: persone) {
@@ -31,9 +45,9 @@ public class Manager {
 	}
 	
 	/**
-	 * otteenere l'oggetto comune avente come nome il valore del parametro fornito
+	 * metodo che ritorna l'oggetto comune avente come nome il valore del parametro fornito
 	 * @param nome_comune
-	 * @return	oggetto comune
+	 * @return	com
 	 */
 	public static Comune getComune(String nome_comune) {
 		for(Comune com: comuni) {
@@ -44,6 +58,9 @@ public class Manager {
 		return null;
 	}
 	
+	/**
+	 * metodo che richiama il metodo di verifica del codice fiscale
+	 */
 	public static void verificaValiditaCodiciFiscali() {
 		boolean corretto;
 		for(CodiceFiscale cod_fisc: codici_fiscali) {
@@ -52,6 +69,9 @@ public class Manager {
 		}
 	}
 	
+	/**
+	 * metodo che conteggia 
+	 */
 	public static void verificaPresenzaCodiceFiscaleInFile() {
 		boolean presente;
 		for(CodiceFiscale cod_fisc: codici_fiscali) {
